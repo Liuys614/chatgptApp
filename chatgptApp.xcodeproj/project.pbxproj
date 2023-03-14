@@ -14,6 +14,9 @@
 		0BDAEA9729B815E900A33F3C /* chatgptAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEA9629B815E900A33F3C /* chatgptAppTests.swift */; };
 		0BDAEAA129B815E900A33F3C /* chatgptAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAA029B815E900A33F3C /* chatgptAppUITests.swift */; };
 		0BDAEAA329B815E900A33F3C /* chatgptAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAA229B815E900A33F3C /* chatgptAppUITestsLaunchTests.swift */; };
+		DB084C9329C0E4A100BAFD8B /* OpenAIapi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */; };
+		DB084C9429C0E4A100BAFD8B /* OpenAIapi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */; };
+		DB084C9829C0F7B700BAFD8B /* openAIApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9729C0F7B700BAFD8B /* openAIApiTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,8 @@
 		0BDAEA9C29B815E900A33F3C /* chatgptAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chatgptAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BDAEAA029B815E900A33F3C /* chatgptAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatgptAppUITests.swift; sourceTree = "<group>"; };
 		0BDAEAA229B815E900A33F3C /* chatgptAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatgptAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIapi.swift; sourceTree = "<group>"; };
+		DB084C9729C0F7B700BAFD8B /* openAIApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openAIApiTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +79,9 @@
 		0BDAEA7929B815E600A33F3C = {
 			isa = PBXGroup;
 			children = (
+				DB084C9629C0F76300BAFD8B /* Test */,
+				DB084C9029C0E43100BAFD8B /* Share */,
 				0BDAEA8429B815E600A33F3C /* chatgptApp */,
-				0BDAEA9529B815E900A33F3C /* chatgptAppTests */,
-				0BDAEA9F29B815E900A33F3C /* chatgptAppUITests */,
 				0BDAEA8329B815E600A33F3C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -125,6 +130,40 @@
 				0BDAEAA229B815E900A33F3C /* chatgptAppUITestsLaunchTests.swift */,
 			);
 			path = chatgptAppUITests;
+			sourceTree = "<group>";
+		};
+		DB084C9029C0E43100BAFD8B /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				DB084C9129C0E43D00BAFD8B /* OpenAIapi */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
+		DB084C9129C0E43D00BAFD8B /* OpenAIapi */ = {
+			isa = PBXGroup;
+			children = (
+				DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */,
+			);
+			path = OpenAIapi;
+			sourceTree = "<group>";
+		};
+		DB084C9529C0F74600BAFD8B /* OpenAIAPITest */ = {
+			isa = PBXGroup;
+			children = (
+				DB084C9729C0F7B700BAFD8B /* openAIApiTest.swift */,
+			);
+			path = OpenAIAPITest;
+			sourceTree = "<group>";
+		};
+		DB084C9629C0F76300BAFD8B /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				DB084C9529C0F74600BAFD8B /* OpenAIAPITest */,
+				0BDAEA9529B815E900A33F3C /* chatgptAppTests */,
+				0BDAEA9F29B815E900A33F3C /* chatgptAppUITests */,
+			);
+			path = Test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB084C9329C0E4A100BAFD8B /* OpenAIapi.swift in Sources */,
 				0BDAEA8829B815E600A33F3C /* ContentView.swift in Sources */,
 				0BDAEA8629B815E600A33F3C /* chatgptAppApp.swift in Sources */,
 			);
@@ -270,6 +310,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB084C9829C0F7B700BAFD8B /* openAIApiTest.swift in Sources */,
+				DB084C9429C0E4A100BAFD8B /* OpenAIapi.swift in Sources */,
 				0BDAEA9729B815E900A33F3C /* chatgptAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
