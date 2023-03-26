@@ -6,7 +6,7 @@
 //
 
 import Foundation
-let OPEN_API_KEY = //fill in api here to fix compile error
+let OPEN_API_KEY = "Bearer "//fill in api here to fix compile error
 /*
  {
    "id": "chatcmpl-123",
