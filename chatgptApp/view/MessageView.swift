@@ -10,7 +10,7 @@ import SwiftUI
 struct MessageView: View, Identifiable {
     var id: Int
     var picture: String
-    @State var message:String = ""
+    var message:String
     
     var body: some View {
         HStack(alignment: .top){
@@ -26,7 +26,8 @@ struct MessageView: View, Identifiable {
 }
 
 struct MessageView_Previews: PreviewProvider {
+    static var msg:String = "test message"
     static var previews: some View {
-        MessageView(id: 0, picture: "user-avatar")
+        MessageView(id: 0, picture: "user-avatar", message: msg)
     }
 }

@@ -19,6 +19,8 @@
 		0BDAEAD729CF9EF900A33F3C /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAD629CF9EF900A33F3C /* ConversationView.swift */; };
 		0BDAEAD929CFB6AD00A33F3C /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAD829CFB6AD00A33F3C /* MenuView.swift */; };
 		0BDAEADB29CFF20100A33F3C /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEADA29CFF20100A33F3C /* InputView.swift */; };
+		0BDAEADF29D3390900A33F3C /* chatgptViewMoudle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEADE29D3390900A33F3C /* chatgptViewMoudle.swift */; };
+		0BDAEAE129D33A7A00A33F3C /* openAIapiStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAE029D33A7A00A33F3C /* openAIapiStruct.swift */; };
 		DB084C9329C0E4A100BAFD8B /* OpenAIapi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */; };
 		DB084C9429C0E4A100BAFD8B /* OpenAIapi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */; };
 		DB084C9829C0F7B700BAFD8B /* openAIApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9729C0F7B700BAFD8B /* openAIApiTest.swift */; };
@@ -57,6 +59,8 @@
 		0BDAEAD629CF9EF900A33F3C /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
 		0BDAEAD829CFB6AD00A33F3C /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		0BDAEADA29CFF20100A33F3C /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		0BDAEADE29D3390900A33F3C /* chatgptViewMoudle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatgptViewMoudle.swift; sourceTree = "<group>"; };
+		0BDAEAE029D33A7A00A33F3C /* openAIapiStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openAIapiStruct.swift; sourceTree = "<group>"; };
 		DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIapi.swift; sourceTree = "<group>"; };
 		DB084C9729C0F7B700BAFD8B /* openAIApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openAIApiTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,13 +113,8 @@
 		0BDAEA8429B815E600A33F3C /* chatgptApp */ = {
 			isa = PBXGroup;
 			children = (
-				0BDAEA8529B815E600A33F3C /* chatgptAppApp.swift */,
-				0BDAEA8729B815E600A33F3C /* ContentView.swift */,
-				0BDAEAD629CF9EF900A33F3C /* ConversationView.swift */,
-				0BDAEADA29CFF20100A33F3C /* InputView.swift */,
-				0BDAEAD829CFB6AD00A33F3C /* MenuView.swift */,
-				0BDAEAD429CF867400A33F3C /* MessageView.swift */,
-				0BDAEAD029CF809000A33F3C /* TitleView.swift */,
+				0BDAEADD29D338A400A33F3C /* view */,
+				0BDAEADC29D3387F00A33F3C /* viewMoudle */,
 				0BDAEA8929B815E800A33F3C /* Assets.xcassets */,
 				0BDAEA8B29B815E800A33F3C /* Preview Content */,
 			);
@@ -147,6 +146,28 @@
 			path = chatgptAppUITests;
 			sourceTree = "<group>";
 		};
+		0BDAEADC29D3387F00A33F3C /* viewMoudle */ = {
+			isa = PBXGroup;
+			children = (
+				0BDAEADE29D3390900A33F3C /* chatgptViewMoudle.swift */,
+			);
+			path = viewMoudle;
+			sourceTree = "<group>";
+		};
+		0BDAEADD29D338A400A33F3C /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0BDAEA8529B815E600A33F3C /* chatgptAppApp.swift */,
+				0BDAEA8729B815E600A33F3C /* ContentView.swift */,
+				0BDAEAD629CF9EF900A33F3C /* ConversationView.swift */,
+				0BDAEADA29CFF20100A33F3C /* InputView.swift */,
+				0BDAEAD829CFB6AD00A33F3C /* MenuView.swift */,
+				0BDAEAD429CF867400A33F3C /* MessageView.swift */,
+				0BDAEAD029CF809000A33F3C /* TitleView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		DB084C9029C0E43100BAFD8B /* Share */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */,
+				0BDAEAE029D33A7A00A33F3C /* openAIapiStruct.swift */,
 			);
 			path = OpenAIapi;
 			sourceTree = "<group>";
@@ -320,7 +342,9 @@
 				0BDAEAD529CF867400A33F3C /* MessageView.swift in Sources */,
 				DB084C9329C0E4A100BAFD8B /* OpenAIapi.swift in Sources */,
 				0BDAEA8829B815E600A33F3C /* ContentView.swift in Sources */,
+				0BDAEAE129D33A7A00A33F3C /* openAIapiStruct.swift in Sources */,
 				0BDAEADB29CFF20100A33F3C /* InputView.swift in Sources */,
+				0BDAEADF29D3390900A33F3C /* chatgptViewMoudle.swift in Sources */,
 				0BDAEA8629B815E600A33F3C /* chatgptAppApp.swift in Sources */,
 				0BDAEAD129CF809000A33F3C /* TitleView.swift in Sources */,
 			);

@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct InputView: View {
-    @State var text:String = ""
+    @State private var text:String = ""
+    @ObservedObject var vm:chatViewModel
+    func onSubmit(){
+        vm.sent(text)
+        text = ""
+    }
     var body: some View {
         HStack{
             TextField("Please input your text.", text: $text, axis: Axis.vertical)
@@ -18,7 +23,12 @@ struct InputView: View {
                 .cornerRadius(5)
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 5))
-            Button(action: {}){
+                .onSubmit {
+                    onSubmit()
+                }
+            Button(action: {
+                onSubmit()
+            }){
                 Image(systemName: "paperplane")
                     .fontWeight(Font.Weight.semibold)
             }
@@ -29,7 +39,8 @@ struct InputView: View {
 }
 
 struct InputView_Previews: PreviewProvider {
+    @StateObject static var vm:chatViewModel = chatViewModel()
     static var previews: some View {
-        InputView()
+        InputView(vm: self.vm)
     }
 }

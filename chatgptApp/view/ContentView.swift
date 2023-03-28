@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var offset = UIScreen.main.bounds.width * -0.8
     @State private var closeOffset = UIScreen.main.bounds.width * -0.8
     @State private var openOffset = CGFloat.zero
+    @StateObject var vm = chatViewModel()
     func openMenu() -> Void {
         self.offset = self.openOffset
     }
@@ -19,8 +20,8 @@ struct ContentView: View {
         ZStack(alignment: .leading){
             VStack{
                 TitleView(OpenMenu: openMenu)
-                ConversationView()
-                InputView()
+                ConversationView(vm: self.vm)
+                InputView(vm: self.vm)
             }
             MenuView(isVisible: $isMenuOpen)
                 .frame(width: UIScreen.main.bounds.width * 0.8)
