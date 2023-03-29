@@ -22,6 +22,7 @@ enum role{
 struct apiRequest: Codable{
     var model: String = ""
     var messages: [messageStruct] = [messageStruct]()
+    var stream: Bool = false
     //var temperature: Float
 }
 
@@ -45,7 +46,14 @@ struct apiRequest: Codable{
    }
  }
  */
-struct apiResponse: Codable{
+struct apiResponseStream: Decodable{
+    var id: String
+    var object: String
+    var created: Int
+    var choices: [choiceStream]
+}
+
+struct apiResponse: Decodable{
     var id: String
     var object: String
     var created: Int
@@ -53,10 +61,21 @@ struct apiResponse: Codable{
     var usage: usageStruct
 }
 
-struct choice: Codable{
+struct choice: Decodable{
     var index :Int
     var message : messageStruct
     var finish_reason: String
+}
+
+struct choiceStream: Decodable{
+    var index :Int
+    let delta: StreamMessage
+    let finish_reason: String?
+}
+
+struct StreamMessage: Decodable{
+    var role: String?
+    var content: String?
 }
 
 struct messageStruct: Codable{

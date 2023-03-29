@@ -10,9 +10,11 @@ import SwiftUI
 struct InputView: View {
     @State private var text:String = ""
     @ObservedObject var vm:chatViewModel
-    func onSubmit(){
-        vm.sent(text)
-        text = ""
+    func onSubmit() {
+        Task{
+            await vm.sentStream(text)
+            text = ""
+        }
     }
     var body: some View {
         HStack{
