@@ -26,7 +26,8 @@ class client: ObservableObject{
     let openAIUrl:String = "https://api.openai.com/v1/chat/completions"
     var header:Dictionary<String, String> {
         get {
-           ["Authorization": tokenAuthScheme + " " + OPEN_API_KEY, "Content-Type": "application/json"]
+           ["Authorization": tokenAuthScheme + " " + OPEN_API_KEY,
+            "Content-Type": "application/json"]
         }
     }
     var req:URLRequest {
@@ -36,21 +37,77 @@ class client: ObservableObject{
         header.forEach{urlRequest.setValue($1, forHTTPHeaderField:$0)}
         return urlRequest
     }
+    
     var callBack:(@MainActor(String, String)->Void)?
+    
+    var callBackStream:(@MainActor(String)->Void)?
     
     init(){
     }
     
-    private func genBody(_ input:[(String,String)]) -> Data{
+    private func genBody(_ input:[(String,String)], _ stream:Bool = false) -> Data{
         var body: apiRequest = apiRequest()
         for (role,msg) in input{
             body.messages.append(
                 messageStruct(role: role, content: msg))
         }
         body.model = model
+        body.stream = stream
         return try! JSONEncoder().encode(body)
     }
     
+    func sentMessageStream(_ input:[(String,String)]) async{
+        var request = self.req
+        request.httpBody = genBody(input, true)
+        do{
+            let (result, response) = try await URLSession.shared.bytes(for: request)
+            
+            
+            // Check the response
+            print(response as Any)
+            guard let httpResponse = response as? HTTPURLResponse
+            else {
+                print("Invalid response")
+                return
+            }
+            
+            //(200...299).contains(httpResponse.statusCode)
+            guard 200...299 ~= httpResponse.statusCode else {
+                print("error reason")
+                return
+            }
+            
+            print(httpResponse.statusCode)
+            
+            print("data:")
+            //print(response)
+            do{
+                for try await line in result.lines {
+                    if line.hasPrefix("data: "){
+                        guard let data = line.dropFirst(6).data(using: .utf8) else { return }
+                        let apiRes = try JSONDecoder().decode(apiResponseStream.self, from: data)
+                        print(apiRes)
+                        if let finishReason:String = apiRes.choices.first?.finish_reason,
+                           finishReason == "stop"{
+                            return
+                        }
+                        guard let del:String = apiRes.choices.first?.delta.content else {continue}
+                        DispatchQueue.main.async {
+                            self.callBackStream!(del)
+                        }
+                    }
+                }
+            }
+            catch{
+                print(error)
+            }
+            
+        } catch{
+            print("Invalid response")
+        }
+    }
+    
+    // update message till all message is ready
     func sentMessage(_ input:[(String,String)]){
         var request = self.req
         request.httpBody = genBody(input)
