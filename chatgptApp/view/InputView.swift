@@ -45,6 +45,7 @@ struct InputView: View {
     }
 }
 
+
 struct InputView_Previews: PreviewProvider {
     @StateObject static var vm:chatViewModel = chatViewModel()
     static var previews: some View {
