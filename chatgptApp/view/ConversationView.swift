@@ -10,13 +10,21 @@ import SwiftUI
 struct ConversationView: View {
     @ObservedObject var vm:chatViewModel
     var body: some View {
-        List{
-            ForEach(0 ..< vm.cons.count, id: \.self){ idx in
-                MessageView(id: idx, picture: vm.cons[idx].role, message: vm.cons[idx].content)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    .listRowBackground(idx % 2 == 0 ? Color(.systemGray6) : Color(.systemGray5))
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                LazyVStack{
+                    ForEach(vm.cons){ con in
+                        MessageView(picture: con.role, message: con.content)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowBackground(con.role == "assistant" ? Color(.systemGray6) : Color(.systemGray5))
+                            .id(con.id)
+                    }
+                }
             }
-        }.listStyle(PlainListStyle())
+            .onChange(of: vm.cons.last?.content) { _ in
+                scrollProxy.scrollTo(vm.cons.last?.id, anchor: .bottomTrailing)
+            }
+        }
     }
 }
 struct ConversationView_Previews: PreviewProvider {

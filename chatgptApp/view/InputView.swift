@@ -31,11 +31,16 @@ struct InputView: View {
             Button(action: {
                 onSubmit()
             }){
-                Image(systemName: "paperplane")
-                    .fontWeight(Font.Weight.semibold)
+                if(vm.isUpdateing){
+                    // TODO: loading icon
+                } else{
+                    Image(systemName: "paperplane")
+                        .fontWeight(Font.Weight.semibold)
+                }
             }
             .foregroundColor(.teal)
             .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 20))
+            .disabled(vm.isUpdateing)
         }
     }
 }

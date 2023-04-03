@@ -73,14 +73,11 @@ class client: ObservableObject{
             
             //(200...299).contains(httpResponse.statusCode)
             guard 200...299 ~= httpResponse.statusCode else {
-                print("error reason")
+                print("error reason", httpResponse.statusCode)
                 return
             }
             
-            print(httpResponse.statusCode)
-            
             print("data:")
-            //print(response)
             do{
                 for try await line in result.lines {
                     if line.hasPrefix("data: "){

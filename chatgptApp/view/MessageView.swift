@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct MessageView: View, Identifiable {
-    var id: Int
+struct MessageView: View{
     var picture: String
     var message:String
     
@@ -28,6 +27,6 @@ struct MessageView: View, Identifiable {
 struct MessageView_Previews: PreviewProvider {
     static var msg:String = "test message"
     static var previews: some View {
-        MessageView(id: 0, picture: "user-avatar", message: msg)
+        MessageView(picture: "user-avatar", message: msg)
     }
 }
