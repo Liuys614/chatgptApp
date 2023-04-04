@@ -14,6 +14,8 @@ struct conversation: Identifiable, Equatable, Hashable{
     var done:Bool = false
 }
 
+
+
 class chatViewModel:ObservableObject{
     private var api:client
     @Published var cons:[conversation]
