@@ -101,7 +101,7 @@ struct ErrorRootResponse: Decodable{
     let error: ErrorResponse
 }
 
-struct ErrorResponse: Codable{
+struct ErrorResponse: Decodable{
     var message: String
     var type: String
     var param: String?

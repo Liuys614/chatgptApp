@@ -19,6 +19,10 @@ struct ConversationView: View {
                             .listRowBackground(con.role == "assistant" ? Color(.systemGray6) : Color(.systemGray5))
                             .id(con.id)
                     }
+                    Text(vm.errorMessage)
+                        .foregroundColor(Color.red)
+                        .font(.callout)
+                        .padding()
                 }
             }
             .onChange(of: vm.cons.last?.content) { _ in
