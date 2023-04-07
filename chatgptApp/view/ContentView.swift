@@ -8,37 +8,56 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var isMenuOpen:Bool = true
-    @State private var offset = UIScreen.main.bounds.width * -0.8
-    @State private var closeOffset = UIScreen.main.bounds.width * -0.8
-    @State private var openOffset = CGFloat.zero
+    @State var isMenuOpen:Bool = false
+    @State private var menuOffset = UIScreen.main.bounds.width * -0.8
+    @State private var menuCloseOffset = UIScreen.main.bounds.width * -0.8
+    @State private var menuOpenOffset = CGFloat.zero
+    @State private var menuDragging = false
     @StateObject var vm = chatViewModel()
     func openMenu() -> Void {
-        self.offset = self.openOffset
+        self.menuOffset = self.menuOpenOffset
+        isMenuOpen = true
     }
     var body: some View {
         ZStack(alignment: .leading){
-            VStack{
+            VStack(spacing: 0){
                 TitleView(OpenMenu: openMenu)
+                Divider()
+                    .frame(height: 0.2)
+                    .overlay(Color(.systemGray2))
                 ConversationView(vm: self.vm)
+                Divider()
+                    .frame(height: 0.2)
+                    .overlay(Color(.systemGray2))
                 InputView(vm: self.vm)
             }
-            MenuView(isVisible: $isMenuOpen)
+            MenuView(isVisible: $isMenuOpen, vm: self.vm)
                 .frame(width: UIScreen.main.bounds.width * 0.8)
-                .offset(x: self.offset)
-                .animation(Animation.easeInOut, value: self.offset)
+                .offset(x: self.menuOffset)
+                .animation(Animation.easeInOut, value: self.menuOffset)
         }
         .gesture(DragGesture(minimumDistance: 5)
             .onChanged{ value in
-                if (self.offset < self.openOffset) {
-                    self.offset = self.closeOffset + value.translation.width
+                if (!isMenuOpen && value.startLocation.x > UIScreen.main.bounds.width*0.2){
+                    return
+                }
+                self.menuDragging = true
+                if (isMenuOpen){
+                    self.menuOffset = min(self.menuOpenOffset, self.menuOpenOffset + value.translation.width)
+                }else{
+                    self.menuOffset = min(self.menuOpenOffset, self.menuCloseOffset + value.translation.width)
                 }
             }
             .onEnded { value in
-                if (value.location.x > value.startLocation.x) {
-                    self.offset = self.openOffset
-                } else {
-                    self.offset = self.closeOffset
+                if (self.menuDragging){
+                    if (value.location.x > value.startLocation.x) {
+                        self.menuOffset = self.menuOpenOffset
+                        self.isMenuOpen = true
+                    } else {
+                        self.menuOffset = self.menuCloseOffset
+                        self.isMenuOpen = false
+                    }
+                    self.menuDragging = false
                 }
             }
         )

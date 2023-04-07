@@ -29,6 +29,16 @@ class chatViewModel:ObservableObject{
         }
     }
     
+    func clearErrorMessage()async{
+        await MainActor.run {
+            errorMessage = ""
+        }
+    }
+    
+    func saveAPIToken(_ key:String){
+        api.setAPIKey(key)
+    }
+    
     private var api:client
     private func addCon(_ role:String, _ text:String)async->Void{
         await MainActor.run {

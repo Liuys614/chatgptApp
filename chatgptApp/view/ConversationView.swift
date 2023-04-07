@@ -12,17 +12,15 @@ struct ConversationView: View {
     var body: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                LazyVStack{
+                LazyVStack(spacing: 0){
                     ForEach(vm.cons){ con in
                         MessageView(picture: con.role, message: con.content)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            .listRowBackground(con.role == "assistant" ? Color(.systemGray6) : Color(.systemGray5))
+                            .background(con.role == "assistant" ? Color(.systemGray6) : Color(.systemBackground))
                             .id(con.id)
                     }
                     Text(vm.errorMessage)
                         .foregroundColor(Color.red)
                         .font(.callout)
-                        .padding()
                 }
             }
             .onChange(of: vm.cons.last?.content) { _ in

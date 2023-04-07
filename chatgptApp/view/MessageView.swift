@@ -18,7 +18,8 @@ struct MessageView: View{
                 .frame(width: 30, height: 30)
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 10))
             Text("\(message)")
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 10))
+                .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 30))
+                .environment(\.sizeCategory, .small)
             Spacer()
         }
     }
