@@ -11,37 +11,40 @@ struct InputView: View {
     @State private var text:String = ""
     @ObservedObject var vm:chatViewModel
     func onSubmit() {
+        if vm.isUpdateing{ return }
         Task{
-            await vm.sentStream(text)
+            await vm.clearErrorMessage()
+            let sentText = text
             text = ""
+            await vm.sentStream(sentText)
         }
     }
     var body: some View {
-        HStack{
-            TextField("Please input your text.", text: $text, axis: Axis.vertical)
-                .lineLimit(10)
-                .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
-                .background(Color(.systemGray6))
-                .cornerRadius(5)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 5))
-                .onSubmit {
-                    onSubmit()
+        VStack{
+            HStack(alignment: .center){
+                TextField("Please input your text.", text: $text, axis: Axis.vertical)
+                    .lineLimit(10)
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .onSubmit(onSubmit)
+                Button(action:onSubmit){
+                    if(vm.isUpdateing){
+                        LoadingBtnView()
+                    } else{
+                        Image(systemName: "paperplane")
+                            .fontWeight(Font.Weight.semibold)
+                    }
                 }
-            Button(action: {
-                onSubmit()
-            }){
-                if(vm.isUpdateing){
-                    // TODO: loading icon
-                } else{
-                    Image(systemName: "paperplane")
-                        .fontWeight(Font.Weight.semibold)
-                }
+                .frame(width: 30)
+                .foregroundColor(Color(.systemTeal))
+                .disabled(vm.isUpdateing)
             }
-            .foregroundColor(.teal)
-            .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 20))
-            .disabled(vm.isUpdateing)
+            .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
+            .background(Color(.systemBackground))
+            .cornerRadius(5)
+            .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.1), radius: 3)
+            .padding()
         }
+        .background(Color(.systemGray6))
     }
 }
 

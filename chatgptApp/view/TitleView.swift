@@ -21,6 +21,7 @@ struct TitleView: View {
             .fontWeight(.semibold)
             Spacer()
             Text("Chat GPT")
+                .font(Font.headline)
             Spacer()
             Button(action:{
             }){
@@ -30,6 +31,7 @@ struct TitleView: View {
             .foregroundColor(Color.teal)
             .fontWeight(.semibold)
         }
+        .background(Color(.systemGray6))
     }
 }
 

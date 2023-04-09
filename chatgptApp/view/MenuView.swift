@@ -7,35 +7,28 @@
 
 import SwiftUI
 
-struct MenuItem: Hashable {
-    var icon: String
-    var title: String
+struct MenuItem : Hashable{
+    var icon: String = ""
+    var title: String = ""
 }
 
 struct MenuView: View {
     @Binding var isVisible: Bool
-    var menuItems = [MenuItem(icon: "person", title: "User icon"),
-                     MenuItem(icon: "key.horizontal.fill", title: "User API Token")]
-  
+    @State var showAPITokenView: Bool = false
+    @State var showAvatorSettingView: Bool = false
+    @StateObject var vm = chatViewModel()
     var body: some View {
         HStack {
             VStack {
                 Text("Setting")
                     .font(Font.title2)
-                List(menuItems, id: \.self) { item in
-                    Button(action: {}) {
-                        HStack {
-                            Image(systemName: item.icon)
-                                .frame(width: 30, height: 30, alignment: .leading)
-                            Text(item.title)
-                            Spacer()
-                        }
-                        .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 0))
-                    }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color(.systemGray6))
-                }
-                .listStyle(PlainListStyle())
+                Divider()
+                MenuItemView(iconName: "person", title: "User icon", isVisiable: $showAvatorSettingView)
+                MenuItemView(iconName: "key.horizontal.fill", title: "User API Token", isVisiable: $showAPITokenView)
+                Spacer()
+            }
+            .sheet(isPresented: $showAPITokenView){
+                UserAPITokenView(vm: vm)
             }
         }
         .background(Color(.systemGray6))

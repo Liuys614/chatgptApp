@@ -18,19 +18,19 @@ import Foundation
 
 
 class client: ObservableObject{
-    var model: String = "gpt-3.5-turbo"
-    var temperature: Float = 0.8
     var role:String = "user"
-    let tokenAuthScheme:String = "Bearer"
-    let OPEN_API_KEY:String = ""
-    let openAIUrl:String = "https://api.openai.com/v1/chat/completions"
-    var header:Dictionary<String, String> {
+    private var model: String = "gpt-3.5-turbo"
+    private var temperature: Float = 0.8
+    private let tokenAuthScheme:String = "Bearer"
+    private var OPEN_API_KEY:String = ""
+    private let openAIUrl:String = "https://api.openai.com/v1/chat/completions"
+    private var header:Dictionary<String, String> {
         get {
            ["Authorization": tokenAuthScheme + " " + OPEN_API_KEY,
             "Content-Type": "application/json"]
         }
     }
-    var req:URLRequest {
+    private var req:URLRequest {
         let url = URL(string: openAIUrl)!
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
@@ -38,9 +38,13 @@ class client: ObservableObject{
         return urlRequest
     }
     
-    var callBack:(@MainActor(String, String)->Void)?
+    var sentStreamCompleteHandler:((String)async->Void)?
     
-    var callBackStream:(@MainActor(String)->Void)?
+    var errorHandler:((String)async->Void)?
+    
+    func setAPIKey(_ key:String)->(){
+        self.OPEN_API_KEY = key
+    }
     
     init(){
     }
@@ -59,102 +63,67 @@ class client: ObservableObject{
     func sentMessageStream(_ input:[(String,String)]) async{
         var request = self.req
         request.httpBody = genBody(input, true)
-        do{
-            let (result, response) = try await URLSession.shared.bytes(for: request)
-            
-            
-            // Check the response
-            print(response as Any)
-            guard let httpResponse = response as? HTTPURLResponse
-            else {
-                print("Invalid response")
-                return
-            }
-            
-            //(200...299).contains(httpResponse.statusCode)
-            guard 200...299 ~= httpResponse.statusCode else {
-                print("error reason", httpResponse.statusCode)
-                return
-            }
-            
-            print("data:")
-            do{
-                for try await line in result.lines {
-                    if line.hasPrefix("data: "){
-                        guard let data = line.dropFirst(6).data(using: .utf8) else { return }
-                        let apiRes = try JSONDecoder().decode(apiResponseStream.self, from: data)
-                        print(apiRes)
-                        if let finishReason:String = apiRes.choices.first?.finish_reason,
-                           finishReason == "stop"{
-                            return
-                        }
-                        guard let del:String = apiRes.choices.first?.delta.content else {continue}
-                        DispatchQueue.main.async {
-                            self.callBackStream!(del)
-                        }
-                    }
-                }
-            }
-            catch{
-                print(error)
-            }
-            
-        } catch{
-            print("Invalid response")
-        }
-    }
-    
-    // update message till all message is ready
-    func sentMessage(_ input:[(String,String)]){
-        var request = self.req
-        request.httpBody = genBody(input)
-        let task = URLSession.shared.dataTask(with: request) { [self] (data, response, error) in
-            if let err = error {
-                print("Error: \(err.localizedDescription)")
-                return
-            }
-            
-            // Check the response
-            print(response as Any)
-            guard let httpResponse = response as? HTTPURLResponse
-            else {
-                print("Invalid response")
-                return
-            }
-            
-            //(200...299).contains(httpResponse.statusCode)
-            guard 200...299 ~= httpResponse.statusCode else {
-                print("error reason")
-                guard let httpData = data else{
-                    return
-                }
-                let err = try? JSONDecoder().decode(ErrorRootResponse.self, from: httpData)
-                print(err as Any)
-                return
-            }
-            
-            print(httpResponse.statusCode)
-            
-            // Check the data
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            
-            print("data:")
-            print(data)
-            do{
-                let apiRes = try JSONDecoder().decode(apiResponse.self, from: data)
-                print(apiRes)
-                DispatchQueue.main.async {
-                    self.callBack!("assistant", apiRes.choices[0].message.content)
-                }
-            }
-            catch{
-                print(error)
-            }
+        guard let (result, response) = try? await URLSession.shared.bytes(for: request) else{
+            print("[System Error]: url session error")
+            return
         }
         
-        task.resume()
+        // Check the response
+        guard let httpResponse = response as? HTTPURLResponse else{
+            guard let handleErr = self.errorHandler else{return}
+            await handleErr("Invalid response")
+            return
+        }
+        
+        // check http statusCode
+        guard (200...299).contains(httpResponse.statusCode) else{
+            guard let handleErr = self.errorHandler else{
+                print("[System Error]: stream complete handler is nil")
+                return
+            }
+            var errorMsg = ""
+            do{
+                for try await line in result.lines {errorMsg += line}
+            }catch{
+                print(error.localizedDescription)
+            }
+            guard let apiRes = try? JSONDecoder().decode(ErrorRootResponse.self, from: Data(errorMsg.utf8))else{
+                print("[System Error]: parssing JSON error \(errorMsg)")
+                return
+            }
+            await handleErr("Http response: \(httpResponse.statusCode) \n \(apiRes.error.message))")
+            return
+        }
+        
+        // process AsyncBytes results received
+        do{
+            for try await line in result.lines {
+                guard line.hasPrefix("data: "),
+                      let data = line.dropFirst(6).data(using: .utf8),
+                      let apiRes = try? JSONDecoder().decode(apiResponseStream.self, from: data) else{
+                    print("[System Error]: parssing JSON error \(line)")
+                    continue
+                }
+                
+                // stop updating when steam finished
+                if let finishReason = apiRes.choices.first?.finish_reason,
+                   finishReason == "stop"{
+                    return
+                }
+                
+                // ignore if no content
+                guard let del = apiRes.choices.first?.delta.content else{continue}
+                
+                // check callback function valid
+                guard let handleStream = self.sentStreamCompleteHandler else {
+                    print("[System Error]: stream complete handler is nil")
+                    return
+                }
+                
+                await handleStream(del)
+            }
+        } catch{
+            print("[System Error]: \(error.localizedDescription)")
+        }
     }
 }

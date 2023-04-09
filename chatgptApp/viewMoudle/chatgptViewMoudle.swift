@@ -14,45 +14,57 @@ struct conversation: Identifiable, Equatable, Hashable{
     var done:Bool = false
 }
 
-
-
 class chatViewModel:ObservableObject{
-    private var api:client
-    @Published var cons:[conversation]
-    @Published var isUpdateing:Bool = false
-    @MainActor lazy private var addCon:(String, String)->Void = {role, text in
-        self.cons.append(conversation(role: role, content: text))
-    }
-    @MainActor lazy var addConvStream:(String)->Void = {delta in
-        self.cons[self.cons.count - 1].content.append(delta)
-    }
+    @MainActor @Published var cons:[conversation] = [conversation]()
+    @MainActor @Published var isUpdateing:Bool = false
+    @MainActor @Published var errorMessage:String = ""
     
     init(){
         api = client()
-        cons = [conversation]()
     }
     
-    @MainActor
-    func sent(_ newText:String){
-        cons.append(conversation(role: api.role, content: newText))
-        var hisConvs:[(String,String)] = [(String,String)]()
-        for con in cons{
-            hisConvs.append((con.role, con.content))
+    func addConvStream(_ delta:String) async->Void{
+        await MainActor.run {
+            self.cons[self.cons.count-1].content.append(delta)
         }
-        api.sentMessage(hisConvs)
     }
     
-    @MainActor
+    func clearErrorMessage()async{
+        await MainActor.run {
+            errorMessage = ""
+        }
+    }
+    
+    func saveAPIToken(_ key:String){
+        api.setAPIKey(key)
+    }
+    
+    private var api:client
+    private func addCon(_ role:String, _ text:String)async->Void{
+        await MainActor.run {
+            self.cons.append(conversation(role: role, content: text))
+        }
+    }
+    
+    private func updateErrorMessage(_ text:String)async->Void{
+        await MainActor.run {
+            self.errorMessage = text
+        }
+    }
+    
+    private func toggleUpdating(_ isUpdating:Bool)async->Void{
+        await MainActor.run {
+            self.isUpdateing = isUpdating
+        }
+    }
+    
     func sentStream(_ newText:String) async{
-        isUpdateing = true
-        api.callBackStream = addConvStream
-        cons.append(conversation(role: api.role, content: newText))
-        var hisConvs:[(String,String)] = [(String,String)]()
-        for con in cons{
-            hisConvs.append((con.role, con.content))
-        }
-        addCon("assistant", "")
-        await api.sentMessageStream(hisConvs)
-        isUpdateing = false
+        await toggleUpdating(true)
+        api.sentStreamCompleteHandler = addConvStream
+        api.errorHandler = updateErrorMessage
+        await addCon(api.role, newText)
+        await addCon("assistant", "")
+        await api.sentMessageStream(cons.map{($0.role, $0.content)})
+        await toggleUpdating(false)
     }
 }
