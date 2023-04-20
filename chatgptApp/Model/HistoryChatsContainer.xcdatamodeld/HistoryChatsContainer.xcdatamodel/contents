@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DialogueEntity" representedClassName="DialogueEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="title" attributeType="String" valueTransformerName="[UtteranceEntity]" defaultValueString="New Title"/>
+        <attribute name="uid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="utterances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UtteranceEntity" inverseName="dialogue" inverseEntity="UtteranceEntity"/>
+    </entity>
+    <entity name="UtteranceEntity" representedClassName="UtteranceEntity" versionHashModifier="1" syncable="YES" codeGenerationType="class">
+        <attribute name="content" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" versionHashModifier="1"/>
+        <attribute name="role" attributeType="String"/>
+        <attribute name="uid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="dialogue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DialogueEntity" inverseName="utterances" inverseEntity="DialogueEntity"/>
+    </entity>
+</model>
