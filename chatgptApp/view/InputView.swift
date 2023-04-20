@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InputView: View {
     @State private var text:String = ""
-    @ObservedObject var vm:chatViewModel
+    @ObservedObject var vm:ChatViewModel
     func onSubmit() {
         if vm.isUpdateing{ return }
         Task{
@@ -50,7 +50,7 @@ struct InputView: View {
 
 
 struct InputView_Previews: PreviewProvider {
-    @StateObject static var vm:chatViewModel = chatViewModel()
+    @StateObject static var vm:ChatViewModel = ChatViewModel(vmHisChats: CoreDataManager.instance, apiManager: OpenAIAPIManager())
     static var previews: some View {
         InputView(vm: self.vm)
     }

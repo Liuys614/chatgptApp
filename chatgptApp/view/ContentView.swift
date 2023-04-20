@@ -13,15 +13,18 @@ struct ContentView: View {
     @State private var menuCloseOffset = UIScreen.main.bounds.width * -0.8
     @State private var menuOpenOffset = CGFloat.zero
     @State private var menuDragging = false
-    @StateObject var vm = chatViewModel()
+    @ObservedObject var vm:ChatViewModel
+    init(vm:ChatViewModel) {
+        self.vm = vm
+    }
     func openMenu() -> Void {
         self.menuOffset = self.menuOpenOffset
-        isMenuOpen = true
+        self.isMenuOpen = true
     }
     var body: some View {
         ZStack(alignment: .leading){
             VStack(spacing: 0){
-                TitleView(OpenMenu: openMenu)
+                TitleView(OpenMenu: openMenu, vm: self.vm)
                 Divider()
                     .frame(height: 0.2)
                     .overlay(Color(.systemGray2))
@@ -65,7 +68,8 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    @ObservedObject static var vm = ChatViewModel(vmHisChats: CoreDataManager.instance, apiManager: OpenAIAPIManager())
     static var previews: some View {
-        ContentView()
+        ContentView(vm: self.vm)
     }
 }

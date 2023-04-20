@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B3B25A029EDF078006CA987 /* HistoricChatsDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B259F29EDF078006CA987 /* HistoricChatsDataManager.swift */; };
 		0B71A00529E074F9004C76E5 /* LoadingBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B71A00429E074F9004C76E5 /* LoadingBtnView.swift */; };
 		0B71A00729E09220004C76E5 /* UserAPITokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B71A00629E09220004C76E5 /* UserAPITokenView.swift */; };
 		0B71A00929E0ADDB004C76E5 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B71A00829E0ADDB004C76E5 /* MenuItemView.swift */; };
-		0BDAEA8629B815E600A33F3C /* chatgptAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEA8529B815E600A33F3C /* chatgptAppApp.swift */; };
+		0B80946B29E5E59F005E2D72 /* HistoryChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B80946A29E5E59F005E2D72 /* HistoryChatsView.swift */; };
+		0B80946D29E5E6FB005E2D72 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B80946C29E5E6FB005E2D72 /* CoreDataManager.swift */; };
+		0B80947129E5F7D9005E2D72 /* HistoryChatsContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B80946F29E5F7D9005E2D72 /* HistoryChatsContainer.xcdatamodeld */; };
+		0BDAEA8629B815E600A33F3C /* ChatgptAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEA8529B815E600A33F3C /* ChatgptAppApp.swift */; };
 		0BDAEA8829B815E600A33F3C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEA8729B815E600A33F3C /* ContentView.swift */; };
 		0BDAEA8A29B815E800A33F3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BDAEA8929B815E800A33F3C /* Assets.xcassets */; };
 		0BDAEA8D29B815E800A33F3C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BDAEA8C29B815E800A33F3C /* Preview Assets.xcassets */; };
@@ -22,8 +26,8 @@
 		0BDAEAD729CF9EF900A33F3C /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAD629CF9EF900A33F3C /* ConversationView.swift */; };
 		0BDAEAD929CFB6AD00A33F3C /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAD829CFB6AD00A33F3C /* MenuView.swift */; };
 		0BDAEADB29CFF20100A33F3C /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEADA29CFF20100A33F3C /* InputView.swift */; };
-		0BDAEADF29D3390900A33F3C /* chatgptViewMoudle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEADE29D3390900A33F3C /* chatgptViewMoudle.swift */; };
-		0BDAEAE129D33A7A00A33F3C /* openAIapiStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAE029D33A7A00A33F3C /* openAIapiStruct.swift */; };
+		0BDAEADF29D3390900A33F3C /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEADE29D3390900A33F3C /* ChatViewModel.swift */; };
+		0BDAEAE129D33A7A00A33F3C /* OpenAIapiStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAEAE029D33A7A00A33F3C /* OpenAIapiStruct.swift */; };
 		DB084C9329C0E4A100BAFD8B /* OpenAIapi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */; };
 		DB084C9429C0E4A100BAFD8B /* OpenAIapi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */; };
 		DB084C9829C0F7B700BAFD8B /* openAIApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB084C9729C0F7B700BAFD8B /* openAIApiTest.swift */; };
@@ -47,11 +51,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B3B259F29EDF078006CA987 /* HistoricChatsDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricChatsDataManager.swift; sourceTree = "<group>"; };
 		0B71A00429E074F9004C76E5 /* LoadingBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingBtnView.swift; sourceTree = "<group>"; };
 		0B71A00629E09220004C76E5 /* UserAPITokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPITokenView.swift; sourceTree = "<group>"; };
 		0B71A00829E0ADDB004C76E5 /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
+		0B80946A29E5E59F005E2D72 /* HistoryChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChatsView.swift; sourceTree = "<group>"; };
+		0B80946C29E5E6FB005E2D72 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0B80947029E5F7D9005E2D72 /* HistoryChatsContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HistoryChatsContainer.xcdatamodel; sourceTree = "<group>"; };
 		0BDAEA8229B815E600A33F3C /* chatgptApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatgptApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0BDAEA8529B815E600A33F3C /* chatgptAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatgptAppApp.swift; sourceTree = "<group>"; };
+		0BDAEA8529B815E600A33F3C /* ChatgptAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatgptAppApp.swift; sourceTree = "<group>"; };
 		0BDAEA8729B815E600A33F3C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0BDAEA8929B815E800A33F3C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0BDAEA8C29B815E800A33F3C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -65,8 +73,8 @@
 		0BDAEAD629CF9EF900A33F3C /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
 		0BDAEAD829CFB6AD00A33F3C /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		0BDAEADA29CFF20100A33F3C /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
-		0BDAEADE29D3390900A33F3C /* chatgptViewMoudle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatgptViewMoudle.swift; sourceTree = "<group>"; };
-		0BDAEAE029D33A7A00A33F3C /* openAIapiStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openAIapiStruct.swift; sourceTree = "<group>"; };
+		0BDAEADE29D3390900A33F3C /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		0BDAEAE029D33A7A00A33F3C /* OpenAIapiStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIapiStruct.swift; sourceTree = "<group>"; };
 		DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIapi.swift; sourceTree = "<group>"; };
 		DB084C9729C0F7B700BAFD8B /* openAIApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openAIApiTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +104,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B3B25A929EE0453006CA987 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0B80946F29E5F7D9005E2D72 /* HistoryChatsContainer.xcdatamodeld */,
+				0B80946C29E5E6FB005E2D72 /* CoreDataManager.swift */,
+				0B3B259F29EDF078006CA987 /* HistoricChatsDataManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0BDAEA7929B815E600A33F3C = {
 			isa = PBXGroup;
 			children = (
@@ -119,8 +137,9 @@
 		0BDAEA8429B815E600A33F3C /* chatgptApp */ = {
 			isa = PBXGroup;
 			children = (
+				0B3B25A929EE0453006CA987 /* Model */,
 				0BDAEADD29D338A400A33F3C /* view */,
-				0BDAEADC29D3387F00A33F3C /* viewMoudle */,
+				0BDAEADC29D3387F00A33F3C /* viewModel */,
 				0BDAEA8929B815E800A33F3C /* Assets.xcassets */,
 				0BDAEA8B29B815E800A33F3C /* Preview Content */,
 			);
@@ -152,18 +171,18 @@
 			path = chatgptAppUITests;
 			sourceTree = "<group>";
 		};
-		0BDAEADC29D3387F00A33F3C /* viewMoudle */ = {
+		0BDAEADC29D3387F00A33F3C /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
-				0BDAEADE29D3390900A33F3C /* chatgptViewMoudle.swift */,
+				0BDAEADE29D3390900A33F3C /* ChatViewModel.swift */,
 			);
-			path = viewMoudle;
+			path = viewModel;
 			sourceTree = "<group>";
 		};
 		0BDAEADD29D338A400A33F3C /* view */ = {
 			isa = PBXGroup;
 			children = (
-				0BDAEA8529B815E600A33F3C /* chatgptAppApp.swift */,
+				0BDAEA8529B815E600A33F3C /* ChatgptAppApp.swift */,
 				0BDAEA8729B815E600A33F3C /* ContentView.swift */,
 				0BDAEAD629CF9EF900A33F3C /* ConversationView.swift */,
 				0BDAEADA29CFF20100A33F3C /* InputView.swift */,
@@ -173,6 +192,7 @@
 				0BDAEAD029CF809000A33F3C /* TitleView.swift */,
 				0B71A00429E074F9004C76E5 /* LoadingBtnView.swift */,
 				0B71A00629E09220004C76E5 /* UserAPITokenView.swift */,
+				0B80946A29E5E59F005E2D72 /* HistoryChatsView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -189,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				DB084C9229C0E4A100BAFD8B /* OpenAIapi.swift */,
-				0BDAEAE029D33A7A00A33F3C /* openAIapiStruct.swift */,
+				0BDAEAE029D33A7A00A33F3C /* OpenAIapiStruct.swift */,
 			);
 			path = OpenAIapi;
 			sourceTree = "<group>";
@@ -349,15 +369,19 @@
 				0BDAEAD729CF9EF900A33F3C /* ConversationView.swift in Sources */,
 				0BDAEAD929CFB6AD00A33F3C /* MenuView.swift in Sources */,
 				0B71A00929E0ADDB004C76E5 /* MenuItemView.swift in Sources */,
+				0B80946B29E5E59F005E2D72 /* HistoryChatsView.swift in Sources */,
 				0BDAEAD529CF867400A33F3C /* MessageView.swift in Sources */,
 				DB084C9329C0E4A100BAFD8B /* OpenAIapi.swift in Sources */,
 				0BDAEA8829B815E600A33F3C /* ContentView.swift in Sources */,
-				0BDAEAE129D33A7A00A33F3C /* openAIapiStruct.swift in Sources */,
+				0BDAEAE129D33A7A00A33F3C /* OpenAIapiStruct.swift in Sources */,
 				0BDAEADB29CFF20100A33F3C /* InputView.swift in Sources */,
+				0B3B25A029EDF078006CA987 /* HistoricChatsDataManager.swift in Sources */,
 				0B71A00529E074F9004C76E5 /* LoadingBtnView.swift in Sources */,
-				0BDAEADF29D3390900A33F3C /* chatgptViewMoudle.swift in Sources */,
-				0BDAEA8629B815E600A33F3C /* chatgptAppApp.swift in Sources */,
+				0B80947129E5F7D9005E2D72 /* HistoryChatsContainer.xcdatamodeld in Sources */,
+				0BDAEADF29D3390900A33F3C /* ChatViewModel.swift in Sources */,
+				0BDAEA8629B815E600A33F3C /* ChatgptAppApp.swift in Sources */,
 				0B71A00729E09220004C76E5 /* UserAPITokenView.swift in Sources */,
+				0B80946D29E5E6FB005E2D72 /* CoreDataManager.swift in Sources */,
 				0BDAEAD129CF809000A33F3C /* TitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,6 +478,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -507,6 +532,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -685,6 +711,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0B80946F29E5F7D9005E2D72 /* HistoryChatsContainer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0B80947029E5F7D9005E2D72 /* HistoryChatsContainer.xcdatamodel */,
+			);
+			currentVersion = 0B80947029E5F7D9005E2D72 /* HistoryChatsContainer.xcdatamodel */;
+			path = HistoryChatsContainer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0BDAEA7A29B815E600A33F3C /* Project object */;
 }
