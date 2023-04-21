@@ -10,9 +10,11 @@ import SwiftUI
 struct InputView: View {
     @State private var text:String = ""
     @ObservedObject var vm:ChatViewModel
+    @FocusState var textfieldFocus: Bool
     func onSubmit() {
         if vm.isUpdateing{ return }
         Task{
+            textfieldFocus = false
             await vm.clearErrorMessage()
             let sentText = text
             text = ""
@@ -26,6 +28,8 @@ struct InputView: View {
                     .lineLimit(10)
                     .textFieldStyle(PlainTextFieldStyle())
                     .onSubmit(onSubmit)
+                    .keyboardType(UIKeyboardType.default)
+                    .focused($textfieldFocus)
                 Button(action:onSubmit){
                     if(vm.isUpdateing){
                         LoadingBtnView()

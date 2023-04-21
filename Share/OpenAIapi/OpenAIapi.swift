@@ -132,7 +132,7 @@ class OpenAIAPIManager{
     func getTitle(_ input:[(String,String)]) async{
         var request = self.req
         var newInput = input
-        newInput.append((role,"Make a title for this conversation, w/o quote, within 10 words, no Title: needed"))
+        newInput.append((role,"Summarize conversation, within 10 words, no punctuations"))
         request.httpBody = genBody(newInput, false)
         guard let (data, response) = try? await URLSession.shared.data(for: request) else{
             print("[System Error]: url session error")
@@ -161,8 +161,11 @@ class OpenAIAPIManager{
                 print("[System Error]: gettitle Complete handler is nil")
                 return
             }
-            
-            await handleStream(apiRes.choices[0].message.content)
+            var title = apiRes.choices[0].message.content
+            if title.hasPrefix("Title: "){ title = String(title.dropFirst(6))}
+            if title.hasPrefix("\""){ title = String(title.dropFirst(1))}
+            if title.hasSuffix("\""){ title = String(title.dropLast(1))}
+            await handleStream(title)
         }catch{
             print(error)
         }
