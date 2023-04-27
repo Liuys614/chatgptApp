@@ -19,6 +19,6 @@ It's a mobile app for practicing swiftUI, concurrency, and networking.
 # Todo
 
 - [ ] Request sending retry 
-- [ ] Clear/Creat new chat box
-- [ ] Store chat history 
+- [x] Clear/Creat new chat box
+- [x] Store chat history 
 - [ ] Store API Key 
