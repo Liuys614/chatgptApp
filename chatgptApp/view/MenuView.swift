@@ -13,17 +13,23 @@ struct MenuItem : Hashable{
 }
 
 struct MenuView: View {
-    @Binding var isVisible: Bool
+    var closeMenu: () -> ()
     @State var showAPITokenView: Bool = false
     @State var showAvatorSettingView: Bool = false
-    @StateObject var vm = chatViewModel()
+    @ObservedObject var vm:ChatViewModel
     var body: some View {
         HStack {
             VStack {
+                Text("History chats")
+                    .font(Font.title2)
+                Divider()
+                HistoryChatsView(vm: self.vm, closeMenu: closeMenu)
+                    .frame( height: UIScreen.main.bounds.height/3)
                 Text("Setting")
                     .font(Font.title2)
                 Divider()
-                MenuItemView(iconName: "person", title: "User icon", isVisiable: $showAvatorSettingView)
+                MenuItemView(iconName: "person", title: "User icon", isVisiable: $showAvatorSettingView, disable: true)
+                Divider()
                 MenuItemView(iconName: "key.horizontal.fill", title: "User API Token", isVisiable: $showAPITokenView)
                 Spacer()
             }
@@ -31,6 +37,7 @@ struct MenuView: View {
                 UserAPITokenView(vm: vm)
             }
         }
+        .padding(SwiftUI.EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
         .background(Color(.systemGray6))
     }
         
@@ -38,7 +45,8 @@ struct MenuView: View {
 
 struct MenuView_Previews: PreviewProvider {
     @State static var isMenuOpen:Bool = true
+    @StateObject static var vm = ChatViewModel(vmHisChats: CoreDataManager.instance, apiManager: OpenAIAPIManager())
     static var previews: some View {
-        MenuView(isVisible: $isMenuOpen)
+        MenuView(closeMenu: {}, vm: vm)
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum role{
+enum Role{
     case user
     case assistant
 }

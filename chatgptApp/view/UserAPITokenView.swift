@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserAPITokenView: View {
-    @ObservedObject var vm:chatViewModel
+    @ObservedObject var vm:ChatViewModel
     @State var apiToken = ""
     @Environment(\.dismiss) var dissmiss
     var body: some View {
@@ -49,7 +49,7 @@ struct UserAPITokenView: View {
 }
 
 struct UserAPITokenView_Previews: PreviewProvider {
-    @StateObject static var vm:chatViewModel = chatViewModel()
+    @StateObject static var vm:ChatViewModel = ChatViewModel(vmHisChats: CoreDataManager.instance, apiManager: OpenAIAPIManager())
     static var previews: some View {
         UserAPITokenView(vm: vm)
     }

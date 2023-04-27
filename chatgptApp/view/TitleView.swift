@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TitleView: View {
     var OpenMenu: () -> Void
+    @ObservedObject var vm:ChatViewModel
     var body: some View {
         HStack{
             Button(action:{
@@ -20,10 +21,15 @@ struct TitleView: View {
             .foregroundColor(Color.teal)
             .fontWeight(.semibold)
             Spacer()
-            Text("Chat GPT")
+            Text(vm.curDialogue.title)
                 .font(Font.headline)
             Spacer()
             Button(action:{
+                Task{
+                    // TODO: lock UI after message saved
+                    await vm.clearErrorMessage()
+                    await vm.saveAndClearCurrentDialogue()
+                }
             }){
                 Image(systemName: "plus")
             }
@@ -37,6 +43,6 @@ struct TitleView: View {
 
 struct titleView_Previews: PreviewProvider {
     static var previews: some View {
-        TitleView(OpenMenu: {})
+        TitleView(OpenMenu: {}, vm: ChatViewModel(vmHisChats: CoreDataManager.instance, apiManager: OpenAIAPIManager()))
     }
 }

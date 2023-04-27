@@ -8,10 +8,11 @@
 import SwiftUI
 
 @main
-struct chatgptAppApp: App {
+struct ChatgptAppApp: App {
+    @StateObject var vm = ChatViewModel(vmHisChats: CoreDataManager.instance, apiManager: OpenAIAPIManager())
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(vm: vm)
         }
     }
 }

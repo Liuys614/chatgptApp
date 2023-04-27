@@ -17,7 +17,7 @@ import Foundation
 */
 
 
-class client: ObservableObject{
+class OpenAIAPIManager{
     var role:String = "user"
     private var model: String = "gpt-3.5-turbo"
     private var temperature: Float = 0.8
@@ -39,6 +39,8 @@ class client: ObservableObject{
     }
     
     var sentStreamCompleteHandler:((String)async->Void)?
+    
+    var getTitleCompleteHandler:((String)async->Void)?
     
     var errorHandler:((String)async->Void)?
     
@@ -124,6 +126,48 @@ class client: ObservableObject{
             }
         } catch{
             print("[System Error]: \(error.localizedDescription)")
+        }
+    }
+    
+    func getTitle(_ input:[(String,String)]) async{
+        var request = self.req
+        var newInput = input
+        newInput.append((role,"Summarize conversation, within 10 words, no punctuations"))
+        request.httpBody = genBody(newInput, false)
+        guard let (data, response) = try? await URLSession.shared.data(for: request) else{
+            print("[System Error]: url session error")
+            return
+        }
+        
+        // Check the response
+        guard let httpResponse = response as? HTTPURLResponse else{
+            guard let handleErr = self.errorHandler else{return}
+            await handleErr("[System Error]: Invalid response")
+            return
+        }
+        
+        // check http statusCode
+        guard (200...299).contains(httpResponse.statusCode) else{
+            let err = try? JSONDecoder().decode(ErrorRootResponse.self, from: data)
+            print(err?.error.message as Any)
+            return
+        }
+        
+        do{
+            let apiRes = try JSONDecoder().decode(apiResponse.self, from: data)
+            
+            // check callback function valid
+            guard let handleStream = self.getTitleCompleteHandler else {
+                print("[System Error]: gettitle Complete handler is nil")
+                return
+            }
+            var title = apiRes.choices[0].message.content
+            if title.hasPrefix("Title: "){ title = String(title.dropFirst(6))}
+            if title.hasPrefix("\""){ title = String(title.dropFirst(1))}
+            if title.hasSuffix("\""){ title = String(title.dropLast(1))}
+            await handleStream(title)
+        }catch{
+            print(error)
         }
     }
 }

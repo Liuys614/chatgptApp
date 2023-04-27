@@ -8,29 +8,29 @@
 import SwiftUI
 
 struct ConversationView: View {
-    @ObservedObject var vm:chatViewModel
+    @ObservedObject var vm:ChatViewModel
     var body: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 LazyVStack(spacing: 0){
-                    ForEach(vm.cons){ con in
-                        MessageView(picture: con.role, message: con.content)
-                            .background(con.role == "assistant" ? Color(.systemGray6) : Color(.systemBackground))
-                            .id(con.id)
+                    ForEach(vm.curDialogue.utters, id: \.id){ utter in
+                        MessageView(picture: utter.role, message: utter.content)
+                            .background(utter.role == "assistant" ? Color(.systemGray6) : Color(.systemBackground))
+                            .id(utter.id)
                     }
                     Text(vm.errorMessage)
                         .foregroundColor(Color.red)
                         .font(.callout)
                 }
             }
-            .onChange(of: vm.cons.last?.content) { _ in
-                scrollProxy.scrollTo(vm.cons.last?.id, anchor: .bottomTrailing)
+            .onChange(of: vm.curDialogue.utters.last?.content) { _ in
+                scrollProxy.scrollTo(vm.curDialogue.utters.last?.id, anchor: .bottomTrailing)
             }
         }
     }
 }
 struct ConversationView_Previews: PreviewProvider {
-    @StateObject static var vm = chatViewModel()
+    @StateObject static var vm = ChatViewModel(vmHisChats: CoreDataManager.instance, apiManager: OpenAIAPIManager())
     static var previews: some View {
         ConversationView(vm: vm)
     }
